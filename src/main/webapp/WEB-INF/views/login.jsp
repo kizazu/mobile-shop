@@ -45,49 +45,63 @@
 	<div class="container-fluid">
 		<div class="container">
 			<h2 class="text-center" id="title">Mobile-Store</h2>
-			<br /> <p id="message"></p>
+			<br />
+			<p id="message"></p>
 			<hr>
 			<div class="row">
 				<div class="col-md-5">
-					<fieldset>
-						<p class="text-uppercase">Login using admin:</p>
+					<form role="form" action="/api/auth/signin" method="POST">
+						<fieldset>
+							<p class="text-uppercase">Login using admin:</p>
+							<p><%=(String) request.getAttribute("message")%></p>
+							<div class="form-group">
+								<input type="text" name="username" id="username"
+									class="form-control input-lg" placeholder="username">
+							</div>
+							<div class="form-group">
+								<input type="password" name="password" id="password"
+									class="form-control input-lg" placeholder="Password">
+							</div>
+							<div>
+								<input type="submit" class="btn btn-md" id="register"
+									value="Sign In">
+							</div>
 
-						<div class="form-group">
-							<input type="text" name="username" id="username"
-								class="form-control input-lg" placeholder="username">
-						</div>
-						<div class="form-group">
-							<input type="password" name="password" id="password"
-								class="form-control input-lg" placeholder="Password">
-						</div>
-						<div>
-							<input type="button" class="btn btn-md" id="register" value="Sign In">
-						</div>
-
-					</fieldset>
+						</fieldset>
+					</form>
 				</div>
 			</div>
 		</div>
 	</div>
 </body>
-<script type="text/javascript">
-	$("#register").click(function(){
-	    $.ajax
-	    ({ 
-	        url: '/api/login/admin',
-	        data: {"username": $("#username").val(),
-	        		"password" : $("#password").val()
-	        },
-	        type: 'post',
-	        success: function(data, textStatus, jqXHR){
-	            console.log(textStatus + ": " + jqXHR.status);
-	            // do something with data
-	         },
-	         error: function(jqXHR, textStatus, errorThrown){
-	            console.log(textStatus + ": " + jqXHR.status + " " + errorThrown);
-	            alert("Account can't login");
-	         }
-	})
-	});
-</script>
+<!-- <script type="text/javascript">
+	$("#register").click(
+			function() {
+				$.ajax({
+					url : '/api/auth/signin',
+					data : JSON.stringify({
+						"username" : $("#username").val(),
+						"password" : $("#password").val()
+					}),
+					type : 'post',
+					contentType : "application/json; charset=utf-8",
+					dataType : "json",
+					success : function(data, textStatus, jqXHR) {
+						var jwt = "Bearer " + data.jwt;
+						$.ajax({
+							url : '/homepage',
+							type : 'get',
+							headers : {
+								"Authorization" : jwt
+							}
+						})
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						console.log(textStatus + ": " + jqXHR.status + " "
+								+ errorThrown);
+						alert("Account can't login");
+					}
+				})
+			});
+</script> -->
 </html>

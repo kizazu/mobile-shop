@@ -10,7 +10,7 @@ import com.edu.security.entities.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-	Optional<User> findByUsernameAndStatus(String username, Integer status);
+	Optional<User> findByUsername(String username);
 
 	Boolean existsByUsername(String username);
 
